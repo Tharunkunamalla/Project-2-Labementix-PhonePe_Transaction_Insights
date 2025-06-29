@@ -107,17 +107,41 @@ elif choice == "State-wise Analysis":
     ORDER BY Years, Quarter;
     """
     df = run_query(conn, q)
-    col1, col2 = st.columns(2)
 
+    col1, col2 = st.columns(2)
     with col1:
         st.subheader("📈 Year-Quarter Transaction Amount")
-        fig = px.bar(df, x="Quarter", y="Amount", color="Years", barmode="group")
+        fig = px.bar(df, x="Quarter", y="Amount", color="Years", barmode="group", title=f"Amount Distribution - {state}")
         st.plotly_chart(fig, use_container_width=True)
 
     with col2:
         st.subheader("📊 Year-Quarter Transaction Count")
-        fig2 = px.bar(df, x="Quarter", y="Count", color="Years", barmode="group")
+        fig2 = px.bar(df, x="Quarter", y="Count", color="Years", barmode="group", title=f"Count Distribution - {state}")
         st.plotly_chart(fig2, use_container_width=True)
+
+    # ✅ Line Chart: Trend Over Time
+    st.subheader("📉 Trend of Transaction Amount and Count Over Time")
+    trend_df = df.copy()
+    trend_df["Period"] = trend_df["Years"].astype(str) + "-Q" + trend_df["Quarter"].astype(str)
+    fig3 = px.line(trend_df, x="Period", y=["Amount", "Count"], markers=True, title=f"Transaction Trends for {state}")
+    st.plotly_chart(fig3, use_container_width=True)
+
+    # ✅ Pie Chart: Amount vs Count Proportion
+    st.subheader("🧮 Proportion of Transaction Amount vs Count")
+    total_amount = df["Amount"].sum()
+    total_count = df["Count"].sum()
+    pie_df = pd.DataFrame({
+        "Metric": ["Total Amount", "Total Count"],
+        "Value": [total_amount, total_count]
+    })
+    fig4 = px.pie(pie_df, names="Metric", values="Value", title=f"Amount vs Count Share for {state}")
+    st.plotly_chart(fig4, use_container_width=True)
+
+    # ✅ Treemap: Amount Distribution by Year and Quarter
+    st.subheader("🌳 Treemap: Transaction Amount by Year & Quarter")
+    fig5 = px.treemap(df, path=["Years", "Quarter"], values="Amount",
+                      title=f"Transaction Amount Distribution for {state}")
+    st.plotly_chart(fig5, use_container_width=True)
 
 #  Aggregated Insurance 
 elif choice == "Aggregated Insurance":
