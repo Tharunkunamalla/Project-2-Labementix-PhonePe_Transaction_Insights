@@ -2,10 +2,10 @@ import os
 import json
 import pandas as pd
 
-# ✅ Set your pulse base path here:
+#Base Path
 base_path = "C:/Users/THARUN KUNAMALLA/CODE LANG/ML_Projects/Phone_pe/pulse/data"
 
-# ✅ Function to standardize state names
+# Function to standardize state names
 def clean_states(df, col="States"):
     df[col] = df[col].str.replace("andaman-&-nicobar-islands", "Andaman & Nicobar")
     df[col] = df[col].str.replace("-", " ")
@@ -13,7 +13,7 @@ def clean_states(df, col="States"):
     df[col] = df[col].str.replace("Dadra & Nagar Haveli & Daman & Diu", "Dadra and Nagar Haveli and Daman and Diu")
     return df
 
-# ✅ Output folder
+#Output folder
 output_folder = "phonepe_extracted_csv"
 os.makedirs(output_folder, exist_ok=True)
 
@@ -226,4 +226,4 @@ df9 = pd.DataFrame(columns9)
 df9 = clean_states(df9)
 df9.to_csv(f"{output_folder}/top_insurance.csv", index=False)
 
-print("✅ All CSVs have been saved in folder:", output_folder)
+print("All CSVs have been saved in folder:", output_folder)
