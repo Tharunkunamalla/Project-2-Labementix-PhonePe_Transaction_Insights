@@ -55,10 +55,6 @@ if choice == "Overview":
             fig = px.area(df, x='States', y='Total_Count', color_discrete_sequence=['indianred'], title="Transaction Count by State")
         st.plotly_chart(fig, use_container_width=True)
 
-    with st.expander("🌳 Treemap View of Transaction Amount"):
-        fig = px.treemap(df, path=['States'], values='Total_Amount', title=f"Treemap of Transaction Amount by State - {selected_year}")
-        st.plotly_chart(fig, use_container_width=True)
-
     with st.expander("📉 Scatter Plot of Amount vs Count"):
         fig = px.scatter(df, x="Total_Count", y="Total_Amount", color="States",
                          title=f"Scatter Plot: Transaction Count vs Amount - {selected_year}",
@@ -119,14 +115,14 @@ elif choice == "State-wise Analysis":
         fig2 = px.bar(df, x="Quarter", y="Count", color="Years", barmode="group", title=f"Count Distribution - {state}")
         st.plotly_chart(fig2, use_container_width=True)
 
-    # ✅ Line Chart: Trend Over Time
+    #  Line Chart: Trend Over Time
     st.subheader("📉 Trend of Transaction Amount and Count Over Time")
     trend_df = df.copy()
     trend_df["Period"] = trend_df["Years"].astype(str) + "-Q" + trend_df["Quarter"].astype(str)
     fig3 = px.line(trend_df, x="Period", y=["Amount", "Count"], markers=True, title=f"Transaction Trends for {state}")
     st.plotly_chart(fig3, use_container_width=True)
 
-    # ✅ Pie Chart: Amount vs Count Proportion
+    #  Pie Chart: Amount vs Count Proportion
     st.subheader("🧮 Proportion of Transaction Amount vs Count")
     total_amount = df["Amount"].sum()
     total_count = df["Count"].sum()
@@ -136,12 +132,6 @@ elif choice == "State-wise Analysis":
     })
     fig4 = px.pie(pie_df, names="Metric", values="Value", title=f"Amount vs Count Share for {state}")
     st.plotly_chart(fig4, use_container_width=True)
-
-    # ✅ Treemap: Amount Distribution by Year and Quarter
-    st.subheader("🌳 Treemap: Transaction Amount by Year & Quarter")
-    fig5 = px.treemap(df, path=["Years", "Quarter"], values="Amount",
-                      title=f"Transaction Amount Distribution for {state}")
-    st.plotly_chart(fig5, use_container_width=True)
 
 #  Aggregated Insurance 
 elif choice == "Aggregated Insurance":
@@ -206,13 +196,12 @@ elif choice == "Top Users":
         fig.update_traces(textposition="outside")
         st.plotly_chart(fig, use_container_width=True)
 
-    st.markdown("### 📌 You can drill down by state using the State-wise Analysis tab for more details.")
 
 #  KPIs 
 elif choice == "KPIs & Metrics":
     st.header("📊 Key Performance Indicators")
 
-    # === Current KPIs ===
+    #  Current KPIs 
     kpi1 = run_query(conn, "SELECT SUM(Transaction_amount) FROM aggregated_transaction").iloc[0, 0]
     kpi2 = run_query(conn, "SELECT SUM(Transaction_count) FROM aggregated_transaction").iloc[0, 0]
     kpi3 = run_query(conn, "SELECT SUM(RegisteredUser) FROM top_user").iloc[0, 0]
@@ -224,7 +213,7 @@ elif choice == "KPIs & Metrics":
 
     st.markdown("### 📈 Yearly Growth Trends")
 
-    # === Trend Graphs ===
+    #  Trend Graphs 
     yearly = run_query(conn, """
         SELECT Years, 
                SUM(Transaction_amount) AS Amount, 
