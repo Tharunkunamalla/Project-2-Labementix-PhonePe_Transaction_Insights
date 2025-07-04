@@ -27,7 +27,7 @@ conn = get_connection()
 #  Overview 
 if choice == "Overview":
     
-
+    #image adding and cols
     col1, col2 = st.columns([1, 10])
 
     with col1:
