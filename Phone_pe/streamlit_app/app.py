@@ -4,8 +4,17 @@ import pandas as pd
 import plotly.express as px
 import json
 
-st.set_page_config(layout="wide", page_title="📊 PhonePe Dashboard")
-st.title("📱 PhonePe Transaction Insights")
+st.set_page_config(layout="wide", page_title="PhonePe Dashboard")
+
+# Create 2 columns
+col1, col2 = st.columns([1, 10])
+
+with col1:
+    st.image("img/phonepe.png", width=80)
+
+with col2:
+    st.title("PhonePe Transaction Insights")
+
 
 menu = [
     "Overview", "State-wise Analysis", "Aggregated Insurance", 
@@ -17,7 +26,16 @@ conn = get_connection()
 
 #  Overview 
 if choice == "Overview":
-    st.header("💼 Aggregated Transaction Overview")
+    
+
+    col1, col2 = st.columns([1, 10])
+
+    with col1:
+        st.image("img/transac.png", width=80)
+
+    with col2:
+        st.header("Aggregated Transaction Overview")
+
 
     year_df = run_query(conn, "SELECT DISTINCT Years FROM aggregated_transaction ORDER BY Years")
     selected_year = st.selectbox("Select Year", year_df["Years"], key="overview_year")
