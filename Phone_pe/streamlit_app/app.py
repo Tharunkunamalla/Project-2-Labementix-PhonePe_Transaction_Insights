@@ -20,7 +20,7 @@ menu = [
     "Overview", "State-wise Analysis", "Aggregated Insurance", 
     "Top Users", "KPIs & Metrics", "Geo Visualization", "Download CSVs"
 ]
-choice = st.sidebar.selectbox("🔎 Select Dashboard View", menu)
+choice = st.sidebar.selectbox("Select Dashboard View", menu)
 
 conn = get_connection()
 
