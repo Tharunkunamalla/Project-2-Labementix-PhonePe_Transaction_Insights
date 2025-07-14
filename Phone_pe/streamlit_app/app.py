@@ -1,16 +1,33 @@
+import os
 import streamlit as st
 from utils import get_connection, run_query
 import pandas as pd
 import plotly.express as px
 import json
+from PIL import Image
 
 st.set_page_config(layout="wide", page_title="PhonePe Dashboard")
+
+img_path = os.path.join(os.path.dirname(__file__), "phonepe.png")
+if os.path.exists(img_path):
+    image = Image.open(img_path)
+else:
+    st.error(f"⚠️ Image not found: {img_path}")
+
+
+transac_path = os.path.join(os.path.dirname(__file__), "transac.png")
+if os.path.exists(transac_path):
+    image1 = Image.open(transac_path)
+else:
+    st.error(f"⚠️ Image not found: {transac_path}")
+
+
 
 # Create 2 columns
 col1, col2 = st.columns([1, 10])
 
 with col1:
-    st.image("phonepe.png", width=80)
+    st.image(image, width=80)
 
 with col2:
     st.title("PhonePe Transaction Insights")
@@ -31,7 +48,7 @@ if choice == "Overview":
     col1, col2 = st.columns([1, 10])
 
     with col1:
-        st.image("transac.png", width=80)
+        st.image(transac_path, width=80)
 
     with col2:
         st.header("Aggregated Transaction Overview")
