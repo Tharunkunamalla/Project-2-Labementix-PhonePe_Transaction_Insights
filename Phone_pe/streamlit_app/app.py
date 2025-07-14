@@ -10,7 +10,7 @@ st.set_page_config(layout="wide", page_title="PhonePe Dashboard")
 col1, col2 = st.columns([1, 10])
 
 with col1:
-    st.image("../img/phonepe.png", width=80)
+    st.image("img/phonepe.png", width=80)
 
 with col2:
     st.title("PhonePe Transaction Insights")
@@ -31,7 +31,7 @@ if choice == "Overview":
     col1, col2 = st.columns([1, 10])
 
     with col1:
-        st.image("../img/transac.png", width=80)
+        st.image("img/transac.png", width=80)
 
     with col2:
         st.header("Aggregated Transaction Overview")
